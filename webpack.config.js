@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
   'faker',
@@ -33,4 +34,14 @@ module.exports = {
       },
     ],
   },
+  // to check and not include common lib. ex. react
+  // without this, bundle.js and vendor.js are both large
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+    }),
+  ],
 };
