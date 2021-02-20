@@ -19,7 +19,7 @@ module.exports = {
   entry: { bundle: './src/index.js', vendor: VENDOR_LIBS },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -38,7 +38,8 @@ module.exports = {
   // without this, bundle.js and vendor.js are both large
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      // manifest is for cashing and webpack
+      names: ['vendor', 'manifest'],
     }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
